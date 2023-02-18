@@ -29,7 +29,8 @@
       "configurations": {
         "development": {
           "buildTarget": "client:build:development",
-          "hmr": true
+          "hmr": true,
+          "open": true
         },
         "production": {
           "buildTarget": "client:build:production",
