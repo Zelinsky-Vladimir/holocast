@@ -1,4 +1,4 @@
-import { PrismaService } from './../../prisma/prisma.service';
+import { DatabaseService } from '../../database/database.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -11,7 +11,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
-    private prismaService: PrismaService
+    private databaseService: DatabaseService
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   async register({ id, password, email, username }: User) {
-    const user = await this.prismaService.user.create({
+    const user = await this.databaseService.user.create({
       data: {
         id,
         password,

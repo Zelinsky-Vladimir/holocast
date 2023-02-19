@@ -1,4 +1,4 @@
-import { PrismaService } from './../../prisma/prisma.service';
+import { DatabaseService } from '../../database/database.service';
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
@@ -17,7 +17,7 @@ import { JwtStrategy } from './jwt.strategy';
       signOptions: { expiresIn: '60m' },
     }),
   ],
-  providers: [AuthService, JwtStrategy, PrismaService],
+  providers: [AuthService, JwtStrategy, DatabaseService],
   exports: [AuthService],
   controllers: [AuthController],
 })
