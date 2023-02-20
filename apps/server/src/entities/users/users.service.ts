@@ -1,9 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { User, UserRole } from '@holocast/types';
-// This should be a real class/interface representing a user entity
+
+import { DatabaseService } from '../../shared/database/database.service';
 
 @Injectable()
 export class UsersService {
+  constructor(
+    private databaseService: DatabaseService
+  ) {}
+
   private readonly users = [
     {
       id: '1',
@@ -23,5 +28,18 @@ export class UsersService {
 
   async findOne(id: string): Promise<User | undefined> {
     return this.users.find(user => user.id === id);
+  }
+
+  async register({ id, password, email, username }: User) {
+    const user = await this.databaseService.user.create({
+      data: {
+        id,
+        password,
+        email,
+        username,
+      },
+    });
+
+    return user;
   }
 }

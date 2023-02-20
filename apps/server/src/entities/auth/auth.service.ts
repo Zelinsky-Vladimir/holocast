@@ -1,10 +1,10 @@
-import { DatabaseService } from '../../database/database.service';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { User } from '@holocast/types';
 
 import { UsersService } from '../users/users.service';
+import { DatabaseService } from '../../shared/database/database.service';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,8 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private databaseService: DatabaseService
-  ) {}
+
+  ) { }
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
@@ -23,19 +24,6 @@ export class AuthService {
     }
 
     return null;
-  }
-
-  async register({ id, password, email, username }: User) {
-    const user = await this.databaseService.user.create({
-      data: {
-        id,
-        password,
-        email,
-        username,
-      },
-    });
-
-    return user;
   }
 
   async login({ username, id }: User) {
